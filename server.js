@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const fetch = require("node-fetch"); // ✅ CommonJS import
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +17,7 @@ app.get("/now-playing", async (req, res) => {
     const data = await response.json();
     res.json(data);
   } catch (err) {
+    console.error("Fetch error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
